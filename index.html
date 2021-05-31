@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #content {
+  height:100px;
+  width:100%;
+  
+  
+}
+#content > div {
+  display: inline-block;;
+}
+
+#wait {
+
+  border-style:dotted;
+  border-bottom-style:none;
+  border-left-style:none;
+  border-right-style:none;
+
+  height:100px;
+  background-color:#fff;
+}
+#up {
+  border-style:solid;
+  border-bottom-style:none;
+  border-left-style:none;
+  border-right-style:none;
+  width:30px;
+  height:100px;
+  background-color:rgba(0,0,0,0.2);
+}
+
+#down {
+  border-style:solid;
+  border-top-style:none;
+  border-left-style:none;
+  border-right-style:none;
+  width:30px;
+  height:100px;
+  text-align:center;
+  background-color:rgba(0,0,0,0.1);
+}
+
+#mid {
+  border-style:dotted;
+ 
+   height:100px;
+  display:inline-block;
+  position:absolute;
+  background-color:red;
+  border-color:red;
+  
+}
+</style>
+<body>
+    BY JINGJO 
+
+<div>
+  input number <input type="text" id="member" placeholder="6211250012" value="16D"></input>
+
+<div id="bout">
+  
+  
+</div>
+
+
+</div>
+
+<div id="content">
+</div>
+
+<hr>
+<div>
+  hex to char <input type="text" id="hxt"><button id="hxtbtn">Calc</button></input> 
+OUTPUT : <label id="char">''</label>
+</div>
+
+
+<script>
+    var data = '00110001'
+var newD = data.split("").reverse().join("")
+var sum = `0${newD}1`
+var x =document.getElementById("content")
+
+var id = document.getElementById("member")
+var hxt = document.getElementById("hxt")
+var hxtbtn = document.getElementById("hxtbtn")
+var char = document.getElementById("char")
+
+
+
+
+hxtbtn.addEventListener('click', function() {
+  char.innerHTML = hexa_to_ascii(hxt.value)
+})
+
+id.addEventListener('keyup',function() {
+  x.innerHTML = '';
+  let data = id.value
+  let newData = data.split("").map((item)=> padNum(ascii_to_hexa(item)))
+  newData = newData.map((item) => item.split("").reverse().join(""))
+  createChartWithData(newData)
+})
+
+
+function hexa_to_ascii(str)
+  {
+	  return String.fromCharCode(str);
+   }
+
+var obj = {
+  a:'',
+  b:''
+}
+
+function ascii_to_hexa(str)
+  {
+	var arr1 = [];
+	for (var n = 0, l = str.length; n < l; n ++) 
+     {
+		var hex = Number(str.charCodeAt(n)).toString(2);
+		arr1.push(hex);
+	 }
+	return arr1.join('');
+   }
+
+function padNum(num){
+  if(num.length < 8) {
+    return padNum('0' + num)
+  }
+  return num
+}
+
+function test() {
+  let data = '16D'
+  let newData = data.split("").map((item)=> padNum(ascii_to_hexa(item)))
+  newData = newData.map((item) => item.split("").reverse().join(""))
+  createChartWithData(newData)
+  //('0' + 11).slice(-2) 
+  
+}
+
+function createChartWithData(dd) {
+   for(let i=0;i<dd.length;i++){
+      x.innerHTML += `<div id="down">S</div>`
+      for(let j=0;j<dd[i].length;j++) {
+        if(dd[i][j] == "0") {
+          x.innerHTML += `<div id="down">0</div>`
+        }else{
+          x.innerHTML += `<div id="up">1</div>`
+        }
+      }
+      x.innerHTML += `<div id="up">E</div>`
+   }
+}
+
+test()
+function clickBtn() {
+  x.innerHTML = "";
+  let b =  ascii_to_hexa(id.value[id.value.length - 1])
+  let a = ascii_to_hexa(id.value[id.value.length - 2])
+  
+
+  document.getElementById("bout").innerHTML= `รองสุดท้าย= 00${a}, "${id.value[id.value.length - 2]}" สุดท้าย=00${b},  "${id.value[id.value.length - 1]}"`
+  console.log(id.value[id.value.length - 1],id.value[id.value.length - 2])
+  a = `00${a}`
+  b = `00${b}`
+  obj.a = a.split("").reverse().join("");
+  obj.b = b.split("").reverse().join("");
+  console.log(obj)
+  
+  createCheart()
+}
+
+function createCheart() {
+  x.innerHTML += `<div id="down">S</div>`
+    for(let i=0;i<obj.a.length;i++){
+        //x.innerHTML += `<div id="up">1</div>`
+      if(obj.a[i] == "0"){
+        x.innerHTML += `<div id="down">0</div>`
+      }else{
+        x.innerHTML += `<div id="up">1</div>`
+      }
+    }
+  x.innerHTML += `<div id="up">E</div>`
+   x.innerHTML += `<div id="mid"></div>`
+    x.innerHTML += `<div id="down">S</div>`
+  for(let i=0;i<obj.b.length;i++){
+        //x.innerHTML += `<div id="up">1</div>`
+      if(obj.b[i] == "0"){
+        x.innerHTML += `<div id="down">0</div>`
+      }else{
+        x.innerHTML += `<div id="up">1</div>`
+      }
+    }
+  x.innerHTML += `<div id="up">E</div>`
+  
+ 
+}
+
+
+</script>
+</body>
+</html>
