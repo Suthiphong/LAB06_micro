@@ -93,7 +93,7 @@
         var btnC = document.getElementById("btnCalc")
 
         var duty = [0, 25, 50, 75]
-        duty[0] = parseInt(`1${getVal[getVal.length - 1]}`)
+        //duty[0] = parseInt(`1${getVal[getVal.length - 1]}`)
         console.log(duty)
 
         const _Pres = [1,2,4,8]
@@ -236,6 +236,7 @@
 
         btnC.addEventListener("click",()=> {
             getVal = document.getElementById("student_id").value
+            duty[0] = parseInt(`1${getVal[getVal.length - 1]}`)
             main()
             console.log(obj)
         })
