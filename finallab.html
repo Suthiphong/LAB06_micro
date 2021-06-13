@@ -7,8 +7,10 @@
     <title>Final-Lab</title>
 </head>
 <body>
-    ID : <input type="texd" id="student_id" value="12">
+    ID : <input type="texd" id="student_id" value="6211250012" placeholder="6211250012">
     ต้องการนับ : <input type="texd" id="tt" value="10000"> ครั้ง
+    <button id="btnCalc">คำนวณ</button>
+    <button id="btnClear">ล้างข้อมูลก่อนคำนวณ</button>
 
     <div id="hh">
 
@@ -32,22 +34,30 @@
             i = 0;
             while(1)
               {
-                if(PORTA.F5==0)
-                 {
-                  while(PORTA.F5==0);
-                  if(i==3)
-                    {
+                PORTC.F2=0;
+                DELAYL();
+                PORTC.F2=1;
+                DELAYH();
+
+                if(PORTA.F4==0){
+                    while(PORTA.F4==0);
+                    if(i==3){
+                    }else{
+                        i++;
                     }
-                  else
-                    i++;
-                 }
-                else
-                 {
-                   PORTC.F2=0;
-                   DELAYL();
-                   PORTC.F2=1;
-                   DELAYH();
-                 }
+                }
+                if(PORTA.F5==0){
+                    while(PORTA.F5==0);
+                    if(i==0){
+
+                    }else{
+                        i--;
+                    }
+                }
+                if(PORTC.F7==0){
+                    while(PORTC.F7==0);
+                    i=0;
+                }
               }
            }
             void DELAYL()
@@ -72,6 +82,7 @@
     </div>
 
     <script>
+
         var getVal = document.getElementById("student_id").value
         var times = document.getElementById("tt").value
         var cc = document.getElementById("hh")
@@ -79,6 +90,7 @@
         var xk = document.getElementById("k")
         var xm = document.getElementById("m")
         var xn = document.getElementById("n")
+        var btnC = document.getElementById("btnCalc")
 
         var duty = [0, 25, 50, 75]
         duty[0] = parseInt(`1${getVal[getVal.length - 1]}`)
@@ -191,11 +203,11 @@
         }
 
         function main() {
+            init()
             let j = []
             let k = []
             let m = []
             let n = []
-            init()
             oscCal()
             html = ` OSC = ${obj.osc} / 4 = ${obj.pre[0]} MHz`
             html += `<br> PRE ${__P[obj.idx]}, t = 1/${obj.pre[0]}MHz = ${obj.t[obj.idx]} us`
@@ -219,11 +231,20 @@
 
 
             cc.innerHTML = html
-            console.log(obj)
             
         }
 
-        main()
+        btnC.addEventListener("click",()=> {
+            getVal = document.getElementById("student_id").value
+            main()
+            console.log(obj)
+        })
+
+        document.getElementById("btnClear").addEventListener("click", ()=>{
+            location.reload();
+        })
+
+
     </script>
 </body>
 </html>
